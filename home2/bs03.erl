@@ -1,25 +1,20 @@
 -module(bs03).
--export([split/1]).
+-export([split/2]).
 
-split(Bin,Sep)->split(Bin, Sep <<>>, []).
+split(Bin, Sep)->	 
+	split(Bin, Sep, <<>>, []).
 
-split(<<Sep, T/binary>>, Bcc, Acc)->split(T, <<>>, [Bcc|Acc]);
-
-split(<<H, T/binary>>, Bcc, Acc)-> 
-	L = <<Bcc/binary, H>>,
-	split(T, L, Acc);
-
-split(<<>>, Bcc, Acc)->reverse([Bcc|Acc]).
-
-reverse(L)->reverse(L,[]).
-
-reverse([H|T], A)->
-	reverse(T, [H|A]);
-
-reverse([], A) -> A.
+split(Bin, Sep, Bcc, Acc)  ->
+	S = list_to_binary(Sep),
+	Len = byte_size(S),
+	case Bin of
+		<<S:Len/binary, T/binary>> ->split(T, Sep, <<>>, [Bcc|Acc]);
+		<<H, T/binary>> -> split(T, Sep, <<Bcc/binary, H>>, Acc);
+		<<>>->lists:reverse([Bcc|Acc]) 
+	end.
 
 %% BinText3 = <<"Col1­-:-­­Col2-:-­Col3­-:-­Col4-:-­Col5">>.
 
-%% c(bs03). bs03:split(BinText3).
+%% c(bs03). bs03:split(BinText3, "-:-").
 
 %% [<<”Col1”>>, <<”Col2”>>, <<”Col3”>>, <<”Col4”>>]
