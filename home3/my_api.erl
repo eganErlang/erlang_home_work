@@ -1,6 +1,6 @@
 -module(my_api).
 
--export([insert_record/1, create_table/1, delete_record/2, select_record/3]).
+-export([def_user/0, insert_record/1, create_table/1, delete_record/2, select_record/3]).
 
 -include_lib("stdlib/include/ms_transform.hrl").
 
@@ -36,5 +36,8 @@ select_record(TableName, DtStart, DtEnd)->
 
 
 create_table(TableName)->
-	Pid = ets:new(TableName, [public, named_table]),
+	Pid = ets:new(TableName, [public, named_table, {keypos, #users.login}]),
 	{ok, Pid}.
+
+def_user() ->
+ #users{}.
