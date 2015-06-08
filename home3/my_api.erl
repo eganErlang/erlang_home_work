@@ -7,11 +7,11 @@
 -record(users,{login, email, dt}).
 
 insert_record(TableName)->
-Data = [#users{login="egan", email="egan@ukr.net", dt="2015-06-01"},
-	#users{login="egan1", email="egan1@ukr.net", dt="2015-06-01"},
-	#users{login="egan2", email="egan2@ukr.net", dt="2015-07-01"},
-	#users{login="egan3", email="egan3@ukr.net", dt="2015-08-01"},
-	#users{login="egan4", email="egan4@ukr.net", dt="2015-09-01"}
+Data = [#users{login="egan", email="egan@ukr.net", dt={2015, 06, 01}},
+	#users{login="egan1", email="egan1@ukr.net", dt={2015, 06, 01}},
+	#users{login="egan2", email="egan2@ukr.net", dt={2015, 07, 01}},
+	#users{login="egan3", email="egan3@ukr.net", dt={2015, 08, 01}},
+	#users{login="egan4", email="egan4@ukr.net", dt={2015, 09, 01}}
 
 ],
 	case ets:info(TableName) of
@@ -30,7 +30,9 @@ end.
 
 select_record(TableName, DtStart, DtEnd)-> 
 	ets:select(TableName, ets:fun2ms(fun(N=#users{dt=C})
-		       when C >= DtStart, C =< DtEnd->N end)).
+		       when C >= DtStart orelse C =< DtEnd->
+		                N
+		   end)).
 
 
 create_table(TableName)->
