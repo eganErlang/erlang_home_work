@@ -1,0 +1,9 @@
+{release,{"home5_release","1"},
+         {erts,"6.4.1"},
+         [{kernel,"3.2"},
+          {stdlib,"2.4"},
+          {ranch,"1.1.0"},
+          {crypto,"3.5"},
+          {cowlib,"1.0.1"},
+          {cowboy,"1.0.1"},
+          {home5,"0.1.0"}]}. 
