@@ -1,3 +1,3 @@
 PROJECT = home5
-DEPS = cowboy
+DEPS = cowboy jsx
 include erlang.mk

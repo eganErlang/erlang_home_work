@@ -1,0 +1,14 @@
+{application, home5, [
+	{description, ""},
+	{vsn, "0.1.0"},
+	{id, "git"},
+	{modules, []},
+	{registered, [home5_sup]},
+	{applications, [
+		kernel,
+		stdlib,
+		cowboy
+	]},
+	{mod, {home5_app, []}},
+	{env, []}
+]}.
